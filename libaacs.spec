@@ -1,30 +1,23 @@
-#global snapshot 1
-%global tarball_date 20111105
-%global git_hash 876f45a3f727eb6f06cdb2b0128f857226346e59
-%global git_short %(echo '%{git_hash}' | cut -c -13)
+%global gitdate 20170425
+%global commit0 e2d31c9a9659603101ff8d89c560bcd231a30044
+%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+%global gver .git%{shortcommit0}
 
 Name:           libaacs
 Version:        0.8.1
-Release:        2%{?snapshot:.%{tarball_date}git%{git_short}}%{?dist}
+Release: 	3%{?gver}%{?dist}
 Summary:        Open implementation of AACS specification
 Group:          System Environment/Libraries
 License:        LGPLv2+
 URL:            http://www.videolan.org/developers/libaacs.html
-%if 0%{?snapshot}
-# Use the commands below to generate a tarball.
-# git clone git://git.videolan.org/libaacs.git
-# cd libaacs
-# git archive --format=tar %{git_hash} --prefix=libaacs/ | bzip2 > ../libaacs-$( date +%Y%m%d )git%{git_short}.tar.bz2
-Source0:        %{name}-%{tarball_date}git%{git_short}.tar.bz2
-%else
-Source0:        ftp://ftp.videolan.org/pub/videolan/%{name}/%{version}/%{name}-%{version}.tar.bz2
-%endif
 
-%if 0%{?snapshot}
+# Do you want see the current commit and release? http://git.videolan.org/?p=libaacs.git
+Source0:        http://git.videolan.org/?p=libaacs.git;a=snapshot;h=%{commit0};sf=tgz#/%{name}-%{shortcommit0}.tar.gz
+
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  libtool
-%endif
+
 
 BuildRequires:  libgcrypt-devel
 BuildRequires:  flex
@@ -55,18 +48,15 @@ developing applications that use %{name}.
 
 
 %prep
-%if 0%{?snapshot}
-%setup -q -n %{name}
-%else
-%setup -q
-%endif
+%autosetup -n %{name}-%{shortcommit0}
+./bootstrap    
 sed -i -e 's/\r//' KEYDB.cfg
 
 
 %build
-%if 0%{?snapshot}
+
 autoreconf -vif
-%endif
+
 %configure --disable-static
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
@@ -97,6 +87,10 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+
+* Tue Apr 25 2017 David Vásquez <davidjeremias82 AT gmail DOT com> - 0.8.1-3.gite2d31c9
+- Updated to 0.8.1-3.gite2d31c9
+
 * Sun Mar 19 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 0.8.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 

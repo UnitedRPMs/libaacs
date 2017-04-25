@@ -1,1 +1,6 @@
-libaacs-0.8.1.tar.bz2
+BUILD/*
+BUILDROOT/*
+RPMS/*
+SPECS/*
+SRPMS/*
+libaacs*.tar.gz
