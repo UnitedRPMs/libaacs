@@ -50,7 +50,7 @@ developing applications that use %{name}.
 %prep
 %autosetup -n %{name}-%{shortcommit0}
 ./bootstrap    
-sed -i -e 's/\r//' KEYDB.cfg
+# sed -i -e 's/\r//' KEYDB.cfg
 
 
 %build
