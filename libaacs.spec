@@ -1,11 +1,11 @@
-%global gitdate 20170425
-%global commit0 e2d31c9a9659603101ff8d89c560bcd231a30044
+%global gitdate 20170926
+%global commit0 883d3c07b156dab21f90a00d7ae7ca5b40ef9564
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
 Name:           libaacs
-Version:        0.8.1
-Release: 	3%{?gver}%{?dist}
+Version:        0.9.0
+Release: 	2%{?gver}%{?dist}
 Summary:        Open implementation of AACS specification
 Group:          System Environment/Libraries
 License:        LGPLv2+
@@ -87,6 +87,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+
+* Tue Sep 26 2017 David Vásquez <davidjeremias82 AT gmail DOT com> - 0.9.0-2.git883d3c0
+- Updated to 0.9.0-2.git883d3c0
 
 * Tue Apr 25 2017 David Vásquez <davidjeremias82 AT gmail DOT com> - 0.8.1-3.gite2d31c9
 - Updated to 0.8.1-3.gite2d31c9
